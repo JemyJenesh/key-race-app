@@ -1,8 +1,12 @@
+import { CssVarsProvider } from "@mui/joy/styles";
+
+import { Home } from "./pages";
+
 function App() {
   return (
-    <div className="App">
-      <h1>Hey</h1>
-    </div>
+    <CssVarsProvider>
+      <Home />
+    </CssVarsProvider>
   );
 }
 
