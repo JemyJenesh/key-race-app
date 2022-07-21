@@ -8,6 +8,7 @@ export function Home() {
     <Sheet
       sx={{
         textAlign: "center",
+        p: 5,
       }}
     >
       <Typography level="h2" component="h2" marginBottom={1}>
@@ -17,7 +18,7 @@ export function Home() {
         A clone of TypeRacer, by Jenesh.
       </Typography>
 
-      <Button variant="soft" component={NavLink} to="/create">
+      <Button variant="soft" component={NavLink} to="/user">
         Play with friends
       </Button>
     </Sheet>
