@@ -2,11 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { CssVarsProvider } from "@mui/joy/styles";
+import { BrowserRouter } from "react-router-dom";
+import { theme } from "./config";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <CssVarsProvider theme={theme}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </CssVarsProvider>
   </React.StrictMode>
 );
 

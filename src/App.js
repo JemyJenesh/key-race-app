@@ -1,12 +1,12 @@
-import { CssVarsProvider } from "@mui/joy/styles";
+import { Route, Routes } from "react-router-dom";
 
 import { Home } from "./pages";
 
 function App() {
   return (
-    <CssVarsProvider>
-      <Home />
-    </CssVarsProvider>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }
 
