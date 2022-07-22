@@ -1,6 +1,7 @@
 import Sheet from "@mui/joy/Sheet";
 
 import { InviteLink, PlayersList } from "../components";
+import StatBox from "../components/StatBox";
 import TypingArea from "../components/TypingArea";
 
 export function Game() {
@@ -19,6 +20,7 @@ export function Game() {
       <PlayersList />
       <TypingArea />
       <InviteLink />
+      <StatBox />
     </Sheet>
   );
 }

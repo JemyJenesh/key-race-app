@@ -11,11 +11,8 @@ export function PlayersList() {
         Waiting for players...
       </Typography>
       <ListDivider />
-      <Player player={{ name: "Jenesh Pradhananga", color: "primary" }} />
       <Player player={{ name: "Player 2" }} />
-      <Player player={{ name: "Player 3" }} />
-      <Player player={{ name: "Player 3" }} />
-      <Player player={{ name: "Player 3" }} />
+      <Player player={{ name: "Jenesh Pradhananga", color: "primary" }} />
       <Player player={{ name: "Player 3" }} />
     </Sheet>
   );
