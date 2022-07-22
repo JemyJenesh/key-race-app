@@ -18,8 +18,8 @@ export function Home() {
         A clone of TypeRacer, by Jenesh.
       </Typography>
 
-      <Button variant="soft" component={NavLink} to="/user">
-        Play with friends
+      <Button variant="soft" component={NavLink} to="/user" size="lg">
+        Start a race!
       </Button>
     </Sheet>
   );

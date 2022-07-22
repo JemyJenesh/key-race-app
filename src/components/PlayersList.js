@@ -1,41 +1,22 @@
-import List from "@mui/joy/List";
-import ListItem from "@mui/joy/ListItem";
-import ListItemDecorator from "@mui/joy/ListItemDecorator";
+import ListDivider from "@mui/joy/ListDivider";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 
+import { Player } from "./Player";
+
 export function PlayersList() {
   return (
-    <Sheet
-      sx={{
-        width: 300,
-        py: 4,
-        pl: 4,
-      }}
-    >
-      <Typography
-        id="players-list"
-        level="body2"
-        textTransform="uppercase"
-        fontWeight="lg"
-        mb={1}
-      >
-        Players
+    <Sheet>
+      <Typography id="players-list" mb={1} fontSize="lg">
+        Waiting for players...
       </Typography>
-      <List
-        aria-labelledby="decorated-list-demo"
-        sx={{ "--List-decorator-width": "32px" }}
-      >
-        <ListItem>
-          <ListItemDecorator>🧅</ListItemDecorator> Player 1
-        </ListItem>
-        <ListItem>
-          <ListItemDecorator>🍤</ListItemDecorator> Player 2
-        </ListItem>
-        <ListItem>
-          <ListItemDecorator>🥓</ListItemDecorator> Player 3
-        </ListItem>
-      </List>
+      <ListDivider />
+      <Player player={{ name: "Jenesh Pradhananga", color: "primary" }} />
+      <Player player={{ name: "Player 2" }} />
+      <Player player={{ name: "Player 3" }} />
+      <Player player={{ name: "Player 3" }} />
+      <Player player={{ name: "Player 3" }} />
+      <Player player={{ name: "Player 3" }} />
     </Sheet>
   );
 }

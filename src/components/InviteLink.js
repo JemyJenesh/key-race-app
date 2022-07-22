@@ -3,11 +3,11 @@ import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 
-export function GameInfo() {
+export function InviteLink() {
   return (
-    <Sheet sx={{ width: 300, py: 4, pr: 4 }}>
+    <Sheet>
       <Typography textAlign="center" fontWeight="lg" mb={1}>
-        Share link
+        Invite friends
       </Typography>
       <Input
         fullWidth
@@ -20,7 +20,6 @@ export function GameInfo() {
           </Button>
         }
         sx={{
-          "--Input-radius": `16px`,
           "--Input-decorator-childHeight": `32px`,
         }}
       />
