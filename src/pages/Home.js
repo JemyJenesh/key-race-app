@@ -3,6 +3,7 @@ import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { socket } from "../config";
 import { playerContext } from "../contexts/playerContext";
 import { gameService } from "../services";
 
@@ -21,6 +22,8 @@ export function Home() {
   const handleCreateGame = async () => {
     const { data } = await gameService.create(player._id);
 
+    socket.emit("gameCreated", data);
+
     navigate(`/game/${data._id}`);
   };
 
@@ -35,6 +38,9 @@ export function Home() {
         p: 5,
       }}
     >
+      <Typography level="h3" component="h3" marginBottom={1}>
+        Hi, {player ? player.name : "there"}
+      </Typography>
       <Typography level="h2" component="h2" marginBottom={1}>
         Welcome to Key Racer
       </Typography>

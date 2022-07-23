@@ -36,11 +36,11 @@ export function Player() {
         navigate("/");
       } else if (queryParam === "create") {
         const { data: game } = await gameService.create(player._id);
-        socket.emit("gameCreated", { game, player });
+        socket.emit("playerJoined", game);
         navigate(`/game/${game._id}`);
       } else {
         const { data: game } = await gameService.update(queryParam, { player });
-        socket.emit("playerJoined", { game, player });
+        socket.emit("playerJoined", game);
         navigate(`/game/${queryParam}`);
       }
     } catch (error) {
