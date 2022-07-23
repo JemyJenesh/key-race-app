@@ -5,19 +5,14 @@ import { Navigate, useParams } from "react-router-dom";
 import { InviteLink, PlayersList } from "../components";
 import StatBox from "../components/StatBox";
 import TypingArea from "../components/TypingArea";
+import { gameContext } from "../contexts/gameContext";
 import { playerContext } from "../contexts/playerContext";
 import { gameService } from "../services";
 
 export function Game() {
   const { id } = useParams();
   const { player } = useContext(playerContext);
-
-  const [game, setGame] = useState(null);
-  const title = !game?.hasStarted
-    ? "Waiting for players..."
-    : game?.isOver
-    ? "The race is over."
-    : "Players are racing...";
+  const { game, setGame } = useContext(gameContext);
 
   useEffect(() => {
     if (player) {
@@ -44,7 +39,7 @@ export function Game() {
         p: 4,
       }}
     >
-      <PlayersList title={title} players={game?.players} />
+      <PlayersList />
       {game?.isOver ? <StatBox /> : <TypingArea />}
       <InviteLink gameId={id} />
     </Sheet>

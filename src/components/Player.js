@@ -31,7 +31,7 @@ export function Player({ player }) {
       <Slider
         defaultValue={0}
         color={color}
-        size={isYou ? "md" : "sm"}
+        size={isYou ? "lg" : "sm"}
         value={player.speed}
       />
       <Typography
