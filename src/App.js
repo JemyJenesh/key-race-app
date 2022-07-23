@@ -17,9 +17,15 @@ function App() {
 
     if (playerId) {
       (async () => {
-        const { data } = await playerService.get(playerId);
+        try {
+          const res = await playerService.get(playerId);
 
-        setPlayer(data);
+          setPlayer(res.data);
+        } catch (err) {
+          console.log(err);
+
+          playerUtil.removePlayerId();
+        }
       })();
     } else {
       console.log("no player");

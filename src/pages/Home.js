@@ -1,9 +1,33 @@
 import Button from "@mui/joy/Button";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { playerContext } from "../contexts/playerContext";
+import { gameService } from "../services";
 
 export function Home() {
+  const { player } = useContext(playerContext);
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    if (player) {
+      await handleCreateGame();
+    } else {
+      handleCreatePlayer();
+    }
+  };
+
+  const handleCreateGame = async () => {
+    const { data } = await gameService.create(player._id);
+
+    navigate(`/game/${data._id}`);
+  };
+
+  const handleCreatePlayer = () => {
+    navigate(`/player?to=game`);
+  };
+
   return (
     <Sheet
       sx={{
@@ -18,7 +42,7 @@ export function Home() {
         A clone of TypeRacer, by Jenesh.
       </Typography>
 
-      <Button variant="soft" component={NavLink} to="/player" size="lg">
+      <Button onClick={handleClick} size="lg" variant="soft">
         Start a race!
       </Button>
     </Sheet>
