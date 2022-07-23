@@ -18,7 +18,7 @@ export function Home() {
         A clone of TypeRacer, by Jenesh.
       </Typography>
 
-      <Button variant="soft" component={NavLink} to="/user" size="lg">
+      <Button variant="soft" component={NavLink} to="/player" size="lg">
         Start a race!
       </Button>
     </Sheet>

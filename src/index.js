@@ -1,20 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+
 import { CssVarsProvider } from "@mui/joy/styles";
 import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 import { theme } from "./config";
+import { PlayerContextProvider } from "./contexts/playerContext";
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <CssVarsProvider theme={theme}>
-      <BrowserRouter>
+  <CssVarsProvider theme={theme}>
+    <BrowserRouter>
+      <PlayerContextProvider>
         <App />
-      </BrowserRouter>
-    </CssVarsProvider>
-  </React.StrictMode>
+      </PlayerContextProvider>
+    </BrowserRouter>
+  </CssVarsProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
