@@ -1,19 +1,22 @@
 import Button from "@mui/joy/Button";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../config";
 import { playerContext } from "../contexts/playerContext";
 import { gameService } from "../services";
 
 export function Home() {
+  const [loading, setLoading] = useState(false);
   const { player } = useContext(playerContext);
   const navigate = useNavigate();
 
   const handleClick = async () => {
     if (player) {
+      setLoading(true);
       await handleCreateGame();
+      setLoading(false);
     } else {
       handleCreatePlayer();
     }
@@ -48,7 +51,7 @@ export function Home() {
         A clone of TypeRacer, by Jenesh.
       </Typography>
 
-      <Button onClick={handleClick} size="lg" variant="soft">
+      <Button onClick={handleClick} size="lg" variant="soft" disabled={loading}>
         Start a race!
       </Button>
     </Sheet>
