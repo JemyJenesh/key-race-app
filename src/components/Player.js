@@ -1,8 +1,16 @@
 import Slider from "@mui/joy/Slider";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
+import { useContext } from "react";
+import { playerContext } from "../contexts/playerContext";
 
 export function Player({ player }) {
+  const { player: currentPlayer } = useContext(playerContext);
+  const { name } = player;
+
+  const isYou = player._id === currentPlayer._id;
+  const color = isYou ? "primary" : "neutral";
+
   return (
     <Sheet sx={{ display: "flex", alignItems: "center", gap: 2, pt: 1 }}>
       <Typography
@@ -14,16 +22,17 @@ export function Player({ player }) {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
         }}
-        color={player.color ?? "neutral"}
-        fontWeight={player.color ? "lg" : "sm"}
+        color={color}
+        fontWeight={isYou ? "lg" : "sm"}
       >
-        {player.name}
+        {name}
       </Typography>
 
       <Slider
-        defaultValue={80}
-        color={player.color ?? "neutral"}
-        size={player.color ? "md" : "sm"}
+        defaultValue={0}
+        color={color}
+        size={isYou ? "md" : "sm"}
+        value={player.speed}
       />
       <Typography
         sx={{
@@ -31,10 +40,10 @@ export function Player({ player }) {
           width: 100,
           maxWidth: 100,
         }}
-        color={player.color ?? "neutral"}
-        fontWeight={player.color ? "lg" : "sm"}
+        color={color}
+        fontWeight={isYou ? "lg" : "sm"}
       >
-        100 wpm
+        {player.speed} wpm
       </Typography>
     </Sheet>
   );

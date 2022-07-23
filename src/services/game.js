@@ -8,6 +8,10 @@ const get = async (id) => {
   return await axios(`/games/${id}`);
 };
 
-const gameService = { create, get };
+const update = async (id, game) => {
+  return await axios.put(`/games/${id}`, game);
+};
+
+const gameService = { create, get, update };
 
 export default gameService;

@@ -13,7 +13,7 @@ export function Player() {
   const [searchParams] = useSearchParams();
   const queryParam = searchParams.get("to");
 
-  const { setPlayer } = useContext(playerContext);
+  const { player, setPlayer } = useContext(playerContext);
 
   const [name, setName] = useState("");
   const handleInputChange = (e) => {
@@ -37,6 +37,7 @@ export function Player() {
         const { data: game } = await gameService.create(player._id);
         navigate(`/game/${game._id}`);
       } else {
+        await gameService.update(queryParam, { player });
         navigate(`/game/${queryParam}`);
       }
     } catch (error) {
@@ -44,7 +45,7 @@ export function Player() {
     }
   };
 
-  if (!queryParam) {
+  if (!queryParam || player) {
     return <Navigate to="/" />;
   }
 

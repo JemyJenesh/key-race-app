@@ -4,16 +4,16 @@ import Typography from "@mui/joy/Typography";
 
 import { Player } from "./Player";
 
-export function PlayersList() {
+export function PlayersList({ players, title }) {
   return (
     <Sheet>
       <Typography id="players-list" mb={1} fontSize="lg">
-        Waiting for players...
+        {title}
       </Typography>
       <ListDivider />
-      <Player player={{ name: "Player 2" }} />
-      <Player player={{ name: "Jenesh Pradhananga", color: "primary" }} />
-      <Player player={{ name: "Player 3" }} />
+      {players?.map((player) => (
+        <Player key={player._id} player={player} />
+      ))}
     </Sheet>
   );
 }
