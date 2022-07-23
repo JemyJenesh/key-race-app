@@ -18,6 +18,10 @@ export function Game() {
   const { game, setGame } = useContext(gameContext);
   const isHost = player?._id === game?.createdBy;
 
+  const start = () => {
+    socket.emit("start", game);
+  };
+
   useEffect(() => {
     socket.on("gameUpdated", (game) => {
       setGame(game);
@@ -64,7 +68,7 @@ export function Game() {
     >
       <PlayersList />
       {game?.isOver ? <StatBox /> : <TypingArea />}
-      {isHost && <Button>Start</Button>}
+      {isHost && !game?.hasStarted && <Button onClick={start}>Start</Button>}
       <InviteLink gameId={id} />
     </Sheet>
   );
