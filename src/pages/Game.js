@@ -67,7 +67,7 @@ export function Game() {
       }}
     >
       <PlayersList />
-      {game?.isOver ? <StatBox /> : <TypingArea />}
+      {game && (game.isOver ? <StatBox /> : <TypingArea />)}
       {isHost && !game?.hasStarted && <Button onClick={start}>Start</Button>}
       <InviteLink gameId={id} />
     </Sheet>
