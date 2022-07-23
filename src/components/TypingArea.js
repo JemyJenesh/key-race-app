@@ -1,8 +1,8 @@
 import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useContext, useEffect, useRef } from "react";
-import { theme } from "../config";
+import { useContext, useEffect, useRef, useState } from "react";
+import { socket, theme } from "../config";
 import { gameContext } from "../contexts/gameContext";
 import { playerContext } from "../contexts/playerContext";
 import { useCountdown } from "../hooks/useCountdown";
@@ -46,6 +46,19 @@ export default function TypingArea() {
   const { player } = useContext(playerContext);
   const { game } = useContext(gameContext);
   const [counter, start] = useCountdown(5, 1000);
+  const [text, setText] = useState("");
+
+  const handleTextChange = (e) => {
+    let value = e.target.value;
+    let lastValue = value.charAt(value.length - 1);
+
+    if (lastValue === " ") {
+      socket.emit("wordTyped", { game, player, word: text });
+      setText("");
+    } else {
+      setText(value);
+    }
+  };
 
   useEffect(() => {
     if (game?.hasStarted) {
@@ -93,6 +106,8 @@ export default function TypingArea() {
         ref={inputRef}
         placeholder="Type the above text here"
         readOnly={counter > 0}
+        value={text}
+        onChange={handleTextChange}
       />
     </Sheet>
   );

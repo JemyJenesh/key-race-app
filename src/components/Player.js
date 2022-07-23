@@ -3,8 +3,10 @@ import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useContext } from "react";
 import { playerContext } from "../contexts/playerContext";
+import { gameContext } from "../contexts/gameContext";
 
 export function Player({ player }) {
+  const { game } = useContext(gameContext);
   const { player: currentPlayer } = useContext(playerContext);
   const { name } = player;
 
@@ -32,7 +34,7 @@ export function Player({ player }) {
         defaultValue={0}
         color={color}
         size={isYou ? "lg" : "sm"}
-        value={player.speed}
+        value={Math.floor((player?.wordIndex / game?.words.length) * 100)}
       />
       <Typography
         sx={{

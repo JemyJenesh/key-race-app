@@ -14,7 +14,7 @@ import { gameService } from "../services";
 export function Game() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { player } = useContext(playerContext);
+  const { player, setPlayer } = useContext(playerContext);
   const { game, setGame } = useContext(gameContext);
   const isHost = player?._id === game?.createdBy;
 
@@ -25,6 +25,7 @@ export function Game() {
   useEffect(() => {
     socket.on("gameUpdated", (game) => {
       setGame(game);
+      setPlayer(game.players.find((p) => p._id === player?._id));
     });
   }, []);
 
