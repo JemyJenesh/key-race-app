@@ -1,10 +1,12 @@
+import { Button } from "@mui/joy";
 import Sheet from "@mui/joy/Sheet";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 import { InviteLink, PlayersList } from "../components";
 import StatBox from "../components/StatBox";
 import TypingArea from "../components/TypingArea";
+import { socket } from "../config";
 import { gameContext } from "../contexts/gameContext";
 import { playerContext } from "../contexts/playerContext";
 import { gameService } from "../services";
@@ -13,6 +15,15 @@ export function Game() {
   const { id } = useParams();
   const { player } = useContext(playerContext);
   const { game, setGame } = useContext(gameContext);
+  const isHost = player._id === game?.createdBy;
+
+  useEffect(() => {
+    socket.on("gameUpdated", (game) => {
+      alert("new player");
+      console.log(game);
+      setGame(game);
+    });
+  }, []);
 
   useEffect(() => {
     if (player) {
@@ -41,6 +52,7 @@ export function Game() {
     >
       <PlayersList />
       {game?.isOver ? <StatBox /> : <TypingArea />}
+      {isHost && <Button>Start</Button>}
       <InviteLink gameId={id} />
     </Sheet>
   );

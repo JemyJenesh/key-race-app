@@ -4,6 +4,7 @@ import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useContext, useState } from "react";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { socket } from "../config";
 import { playerContext } from "../contexts/playerContext";
 import { gameService, playerService } from "../services";
 import playerUtil from "../utils/player";
@@ -35,9 +36,11 @@ export function Player() {
         navigate("/");
       } else if (queryParam === "create") {
         const { data: game } = await gameService.create(player._id);
+        socket.emit("gameCreated", { game, player });
         navigate(`/game/${game._id}`);
       } else {
-        await gameService.update(queryParam, { player });
+        const { data: game } = await gameService.update(queryParam, { player });
+        socket.emit("playerJoined", { game, player });
         navigate(`/game/${queryParam}`);
       }
     } catch (error) {
