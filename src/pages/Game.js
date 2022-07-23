@@ -15,12 +15,10 @@ export function Game() {
   const { id } = useParams();
   const { player } = useContext(playerContext);
   const { game, setGame } = useContext(gameContext);
-  const isHost = player._id === game?.createdBy;
+  const isHost = player?._id === game?.createdBy;
 
   useEffect(() => {
     socket.on("gameUpdated", (game) => {
-      alert("new player");
-      console.log(game);
       setGame(game);
     });
   }, []);
