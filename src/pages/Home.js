@@ -25,7 +25,7 @@ export function Home() {
   };
 
   const handleCreatePlayer = () => {
-    navigate(`/player?to=game`);
+    navigate(`/player?to=create`);
   };
 
   return (

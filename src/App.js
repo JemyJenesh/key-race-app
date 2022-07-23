@@ -4,7 +4,7 @@ import { Game, Home, Player } from "./pages";
 
 import "./app.css";
 import { playerContext } from "./contexts/playerContext";
-import { Suspense, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import playerUtil from "./utils/player";
 import playerService from "./services/player";
 
@@ -25,13 +25,14 @@ function App() {
           console.log(err);
 
           playerUtil.removePlayerId();
+        } finally {
+          setLoading(false);
         }
       })();
     } else {
       console.log("no player");
+      setLoading(false);
     }
-
-    setLoading(false);
   }, []);
 
   if (loading) {
@@ -41,7 +42,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/game" element={<Game />} />
+      <Route path="/game/:id" element={<Game />} />
       <Route path="/player" element={<Player />} />
     </Routes>
   );

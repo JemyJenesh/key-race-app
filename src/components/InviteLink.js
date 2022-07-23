@@ -3,7 +3,9 @@ import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 
-export function InviteLink() {
+export function InviteLink({ gameId }) {
+  const link = `http://localhost:3000/game/${gameId}`;
+
   return (
     <Sheet>
       <Typography textAlign="center" fontWeight="lg" mb={1}>
@@ -13,9 +15,15 @@ export function InviteLink() {
         fullWidth
         size="sm"
         readOnly
-        value="http://localhost:3000/game/1023henfoa0913he12j102f9sd0f9h1"
+        value={link}
         endDecorator={
-          <Button variant="soft" size="sm">
+          <Button
+            variant="soft"
+            size="sm"
+            onClick={() => {
+              navigator.clipboard.writeText(link);
+            }}
+          >
             Copy
           </Button>
         }

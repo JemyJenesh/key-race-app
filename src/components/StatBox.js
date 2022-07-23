@@ -24,9 +24,9 @@ export default function StatBox() {
           height: 32,
           width: "20%",
         },
-        "& tbody tr:nth-child(2)": {
-          background: (theme) => theme.colorSchemes.light.palette.primary[100],
-        },
+        // "& tbody": {
+        //   background: (theme) => theme.colorSchemes.light.palette.primary[100],
+        // },
       }}
       component="table"
     >

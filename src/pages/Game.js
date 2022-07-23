@@ -1,10 +1,20 @@
 import Sheet from "@mui/joy/Sheet";
+import { useContext } from "react";
+import { Navigate, useParams } from "react-router-dom";
 
 import { InviteLink, PlayersList } from "../components";
 import StatBox from "../components/StatBox";
 import TypingArea from "../components/TypingArea";
+import { playerContext } from "../contexts/playerContext";
 
 export function Game() {
+  const { id } = useParams();
+  const { player } = useContext(playerContext);
+
+  if (!player) {
+    return <Navigate to={`/player?to=${id}`} />;
+  }
+
   return (
     <Sheet
       sx={{
@@ -19,7 +29,7 @@ export function Game() {
     >
       <PlayersList />
       <TypingArea />
-      <InviteLink />
+      <InviteLink gameId={id} />
       <StatBox />
     </Sheet>
   );

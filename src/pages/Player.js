@@ -2,13 +2,19 @@ import Button from "@mui/joy/Button";
 import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import playerService from "../services/player";
+import { useContext, useState } from "react";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { playerContext } from "../contexts/playerContext";
+import { gameService, playerService } from "../services";
 import playerUtil from "../utils/player";
 
 export function Player() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const queryParam = searchParams.get("to");
+
+  const { setPlayer } = useContext(playerContext);
+
   const [name, setName] = useState("");
   const handleInputChange = (e) => {
     setName(e.target.value);
@@ -17,16 +23,30 @@ export function Player() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!name) return;
+
     try {
-      const { data } = await playerService.create(name);
+      const { data: player } = await playerService.create(name);
 
-      playerUtil.savePlayerId(data._id);
+      playerUtil.savePlayerId(player._id);
+      setPlayer(player);
 
-      navigate("/game");
+      if (!queryParam) {
+        navigate("/");
+      } else if (queryParam === "create") {
+        const { data: game } = await gameService.create(player._id);
+        navigate(`/game/${game._id}`);
+      } else {
+        navigate(`/game/${queryParam}`);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (!queryParam) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Sheet
