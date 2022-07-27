@@ -19,13 +19,13 @@ export function Game() {
   const isHost = player?._id === game?.createdBy;
 
   const start = () => {
-    socket.emit("start", game);
+    socket.emit("gameStarted", game?._id);
   };
 
   useEffect(() => {
     socket.on("gameUpdated", (game) => {
       setGame(game);
-      setPlayer(game.players.find((p) => p._id === player?._id));
+      setPlayer(game?.players.find((p) => p._id === player?._id));
     });
   }, []);
 
@@ -33,16 +33,18 @@ export function Game() {
     if (player) {
       (async () => {
         try {
-          const { data } = await gameService.get(id);
+          const data = await gameService.get(id);
 
           setGame(data);
 
           if (!data.players.find((p) => p._id === player._id)) {
-            const { data: game } = await gameService.update(data._id, {
-              player,
-            });
-
-            socket.emit("playerJoined", game);
+            const { data: game } = await gameService.update(
+              data._id,
+              {
+                player,
+              },
+              true
+            );
           }
         } catch (error) {
           navigate("/");
@@ -50,6 +52,16 @@ export function Game() {
       })();
     }
   }, [player]);
+
+  useEffect(() => {
+    if (game) {
+      socket.emit("gameJoined", game._id);
+    }
+  }, [game]);
+
+  if (!id) {
+    return <Navigate to="/" />;
+  }
 
   if (!player) {
     return <Navigate to={`/player?to=${id}`} />;

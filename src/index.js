@@ -5,6 +5,7 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { theme } from "./config";
+import { GameContextProvider } from "./contexts/gameContext";
 import { PlayerContextProvider } from "./contexts/playerContext";
 import reportWebVitals from "./reportWebVitals";
 
@@ -13,7 +14,9 @@ root.render(
   <CssVarsProvider theme={theme}>
     <BrowserRouter>
       <PlayerContextProvider>
-        <App />
+        <GameContextProvider>
+          <App />
+        </GameContextProvider>
       </PlayerContextProvider>
     </BrowserRouter>
   </CssVarsProvider>

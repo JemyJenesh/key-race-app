@@ -53,7 +53,11 @@ export default function TypingArea() {
     let lastValue = value.charAt(value.length - 1);
 
     if (lastValue === " ") {
-      socket.emit("wordTyped", { game, player, word: text });
+      socket.emit("playerTyped", {
+        gameId: game?._id,
+        playerId: player?._id,
+        word: text,
+      });
       setText("");
     } else {
       setText(value);
@@ -85,7 +89,7 @@ export default function TypingArea() {
         fontSize="xl"
         sx={{ opacity: counter === 0 ? "100%" : "50%" }}
       >
-        <DisplayWords words={game.words} player={player} />
+        {/* <DisplayWords words={game.words} player={player} /> */}
       </Typography>
 
       <Typography

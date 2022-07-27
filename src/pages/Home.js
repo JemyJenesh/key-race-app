@@ -3,12 +3,13 @@ import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { socket } from "../config";
+import { gameContext } from "../contexts/gameContext";
 import { playerContext } from "../contexts/playerContext";
 import { gameService } from "../services";
 
 export function Home() {
   const [loading, setLoading] = useState(false);
+  const { setGame } = useContext(gameContext);
   const { player } = useContext(playerContext);
   const navigate = useNavigate();
 
@@ -23,11 +24,11 @@ export function Home() {
   };
 
   const handleCreateGame = async () => {
-    const { data } = await gameService.create(player._id);
+    const game = await gameService.create(player._id);
 
-    socket.emit("gameCreated", data);
+    setGame(game);
 
-    navigate(`/game/${data._id}`);
+    navigate(`/game/${game?._id}`);
   };
 
   const handleCreatePlayer = () => {

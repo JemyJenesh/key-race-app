@@ -2,12 +2,11 @@ import { Route, Routes } from "react-router-dom";
 
 import { Game, Home, Player } from "./pages";
 
+import { useContext, useEffect, useState } from "react";
 import "./app.css";
 import { playerContext } from "./contexts/playerContext";
-import { useContext, useEffect, useState } from "react";
-import playerUtil from "./utils/player";
 import playerService from "./services/player";
-import { GameContextProvider } from "./contexts/gameContext";
+import playerUtil from "./utils/player";
 
 function App() {
   const { setPlayer } = useContext(playerContext);
@@ -43,14 +42,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route
-        path="/game/:id"
-        element={
-          <GameContextProvider>
-            <Game />
-          </GameContextProvider>
-        }
-      />
+      <Route path="/game/:id" element={<Game />} />
       <Route path="/player" element={<Player />} />
     </Routes>
   );
