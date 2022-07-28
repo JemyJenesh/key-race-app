@@ -52,11 +52,16 @@ export default function TypingArea() {
     let value = e.target.value;
     let lastValue = value.charAt(value.length - 1);
 
-    if (lastValue === " ") {
+    const isCorrect = value.trim() === game.words[player.wordIndex];
+
+    if (
+      isCorrect &&
+      (lastValue === " " || player.wordIndex === game.words.length - 1)
+    ) {
       socket.emit("playerTyped", {
         gameId: game?._id,
         playerId: player?._id,
-        word: text,
+        word: value.trim(),
       });
       setText("");
     } else {
@@ -89,7 +94,7 @@ export default function TypingArea() {
         fontSize="xl"
         sx={{ opacity: counter === 0 ? "100%" : "50%" }}
       >
-        {/* <DisplayWords words={game.words} player={player} /> */}
+        <DisplayWords words={game.words} player={player} />
       </Typography>
 
       <Typography
@@ -109,7 +114,7 @@ export default function TypingArea() {
       <Input
         ref={inputRef}
         placeholder="Type the above text here"
-        readOnly={counter > 0}
+        readOnly={counter > 0 || player?.wordIndex === game.words.length}
         value={text}
         onChange={handleTextChange}
       />

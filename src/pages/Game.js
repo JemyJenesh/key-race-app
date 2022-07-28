@@ -38,7 +38,7 @@ export function Game() {
           setGame(data);
 
           if (!data.players.find((p) => p._id === player._id)) {
-            const { data: game } = await gameService.update(
+            await gameService.update(
               data._id,
               {
                 player,
