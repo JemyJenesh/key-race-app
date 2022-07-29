@@ -23,10 +23,6 @@ const DisplayWords = ({ typedWord }) => {
     });
   }, [typedWord]);
 
-  useEffect(() => {
-    console.log("errIndex:", errorIndex);
-  }, [errorIndex]);
-
   const getTypedWords = () => {
     let typedWords = words.slice(0, player.wordIndex);
     typedWords = typedWords.join(" ");
