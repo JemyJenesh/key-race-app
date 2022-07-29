@@ -2,44 +2,11 @@ import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useContext, useEffect, useRef, useState } from "react";
-import { socket, theme } from "../config";
+import { socket } from "../config";
 import { gameContext } from "../contexts/gameContext";
 import { playerContext } from "../contexts/playerContext";
 import { useCountdown } from "../hooks/useCountdown";
-
-const DisplayWords = ({ words, player }) => {
-  const getTypedWords = () => {
-    let typedWords = words.slice(0, player.wordIndex);
-    typedWords = typedWords.join(" ");
-
-    return <Typography textColor="lightgray">{typedWords} </Typography>;
-  };
-
-  const getCurrentWords = () => {
-    return (
-      <Typography
-        bgcolor={theme.colorSchemes.light.palette.primary.softActiveBg}
-      >
-        {words[player.wordIndex]}
-      </Typography>
-    );
-  };
-
-  const getRestWords = () => {
-    let restWords = words.slice(player.wordIndex + 1);
-    restWords = restWords.join(" ");
-
-    return <Typography> {restWords}</Typography>;
-  };
-
-  return (
-    <>
-      {getTypedWords()}
-      {getCurrentWords()}
-      {getRestWords()}
-    </>
-  );
-};
+import DisplayWords from "./DisplayWords";
 
 export default function TypingArea() {
   const inputRef = useRef();
@@ -50,6 +17,9 @@ export default function TypingArea() {
 
   const handleTextChange = (e) => {
     let value = e.target.value;
+
+    if (value.length > 27) return;
+
     let lastValue = value.charAt(value.length - 1);
 
     const isCorrect = value.trim() === game.words[player.wordIndex];
@@ -94,7 +64,7 @@ export default function TypingArea() {
         fontSize="xl"
         sx={{ opacity: counter === 0 ? "100%" : "50%" }}
       >
-        <DisplayWords words={game.words} player={player} />
+        <DisplayWords typedWord={text} />
       </Typography>
 
       <Typography
