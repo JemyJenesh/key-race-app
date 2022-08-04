@@ -1,5 +1,5 @@
 import Axios from "axios";
 
 export const axios = Axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: process.env.API_URL + "/api" || "http://localhost:5000/api",
 });
