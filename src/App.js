@@ -18,12 +18,10 @@ function App() {
     if (playerId) {
       (async () => {
         try {
-          const res = await playerService.get(playerId);
-
-          setPlayer(res.data);
+          const player = await playerService.get(playerId);
+          setPlayer(player);
         } catch (err) {
           console.log(err);
-
           playerUtil.removePlayerId();
         } finally {
           setLoading(false);

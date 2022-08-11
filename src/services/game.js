@@ -1,39 +1,41 @@
-import { axios, socket } from "../config";
+import { addDoc, collection, doc } from "firebase/firestore/lite";
+import { onSnapshot } from "firebase/firestore";
+import { db } from "../utils/firebase";
 
-const create = async (playerId) => {
-  try {
-    const { data: game } = await axios.post("/games", { playerId });
+const create = async (player) => {
+  const game = {
+    startedAt: null,
+    isOver: false,
+    player: [player],
+    hostId: player.id,
+  };
 
-    socket.emit("playerJoined", game._id);
+  const docRef = await addDoc(collection(db, "games"), game);
+  game.id = docRef.id;
 
-    return game;
-  } catch (error) {
-    console.log(error);
-  }
+  console.log("Game data: ", game);
+  return game;
 };
 
-const get = async (id) => {
-  try {
-    const { data: game } = await axios(`/games/${id}`);
+const get = async (id, setGame) => {
+  return onSnapshot(doc(db, "games", id), (doc) => {
+    const game = { id: doc.id, ...doc.data() };
 
-    return game;
-  } catch (error) {
-    throw "No gmae found";
-  }
+    console.log("Game data: ", game);
+    setGame(game);
+  });
 };
 
 const update = async (id, game, playerJoined = false) => {
-  try {
-    const { data: updatedGame } = await axios.put(`/games/${id}`, game);
-
-    if (playerJoined) {
-      socket.emit("playerJoined", id);
-    }
-
-    return updatedGame;
-  } catch (error) {
-    console.log("Game is closed!");
-  }
+  // try {
+  //   const { data: updatedGame } = await axios.put(`/games/${id}`, game);
+  //   if (playerJoined) {
+  //     socket.emit("playerJoined", id);
+  //   }
+  //   return updatedGame;
+  // } catch (error) {
+  //   console.log("Game is closed!");
+  // }
 };
 
 const gameService = { create, get, update };

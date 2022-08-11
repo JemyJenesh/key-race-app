@@ -24,11 +24,11 @@ export function Home() {
   };
 
   const handleCreateGame = async () => {
-    const game = await gameService.create(player._id);
+    const game = await gameService.create(player);
 
     setGame(game);
 
-    navigate(`/game/${game?._id}`);
+    navigate(`/game/${game.id}`);
   };
 
   const handleCreatePlayer = () => {

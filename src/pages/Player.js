@@ -28,29 +28,30 @@ export function Player() {
     if (!name) return;
 
     try {
-      const { data: player } = await playerService.create(name);
+      const player = await playerService.create(name);
 
-      playerUtil.savePlayerId(player._id);
+      playerUtil.savePlayerId(player.id);
       setPlayer(player);
 
       if (!queryParam) {
         navigate("/");
       } else if (queryParam === "create") {
-        const game = await gameService.create(player._id);
+        console.log("create game");
+        const game = await gameService.create(player);
 
         setGame(game);
 
-        navigate(`/game/${game._id}`);
+        navigate(`/game/${game.id}`);
       } else {
-        const updatedGame = await gameService.update(
-          queryParam,
-          { player },
-          true
-        );
+        console.log("join game");
 
-        setGame(updatedGame);
-
-        navigate(`/game/${queryParam}`);
+        // const updatedGame = await gameService.update(
+        //   queryParam,
+        //   { player },
+        //   true
+        // );
+        // setGame(updatedGame);
+        // navigate(`/game/${queryParam}`);
       }
     } catch (error) {
       console.log(error);
