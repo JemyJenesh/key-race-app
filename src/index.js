@@ -8,6 +8,7 @@ import { theme } from "./config";
 import { GameContextProvider } from "./contexts/gameContext";
 import { PlayerContextProvider } from "./contexts/playerContext";
 import reportWebVitals from "./reportWebVitals";
+import Typing from "./components/Typing";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +16,8 @@ root.render(
     <BrowserRouter>
       <PlayerContextProvider>
         <GameContextProvider>
-          <App />
+          {/* <App /> */}
+          <Typing />
         </GameContextProvider>
       </PlayerContextProvider>
     </BrowserRouter>

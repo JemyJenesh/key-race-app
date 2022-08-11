@@ -2,13 +2,14 @@ import Sheet from "@mui/joy/Sheet";
 
 const Track = ({ children }) => {
   return (
-    <>
+    <Sheet sx={{ display: "flex", gap: "4px" }}>
       <Sheet
         sx={{
           flex: 1,
           borderBottom: 3,
           borderColor: "gray",
           borderBottomStyle: "dashed",
+          pb: 0.5,
         }}
       >
         {children}
@@ -22,7 +23,7 @@ const Track = ({ children }) => {
           mr: 2,
         }}
       />
-    </>
+    </Sheet>
   );
 };
 
