@@ -1,67 +1,45 @@
 import { Button } from "@mui/joy";
 import Sheet from "@mui/joy/Sheet";
-import { useContext, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
 
 import { InviteLink, PlayersList } from "../components";
 import StatBox from "../components/StatBox";
 import TypingArea from "../components/TypingArea";
-import { socket } from "../config";
 import { gameContext } from "../contexts/gameContext";
 import { playerContext } from "../contexts/playerContext";
 import { gameService } from "../services";
 
 export function Game() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { player, setPlayer } = useContext(playerContext);
+  const { player } = useContext(playerContext);
   const { game, setGame } = useContext(gameContext);
-  const isHost = player?._id === game?.createdBy;
+  const [joining, setJoining] = useState(false);
+  const isHost = player?.id === game?.hostId;
+  const joined = !!game?.players.find((p) => p.id === player?.id);
 
   const start = () => {
-    socket.emit("gameStarted", game?._id);
+    // socket.emit("gameStarted", game?._id);
+  };
+
+  const join = async () => {
+    setJoining(true);
+    await gameService.update(game?.id, {
+      ...game,
+      players: [...game.players, player],
+    });
+    setJoining(false);
   };
 
   useEffect(() => {
-    socket.on("gameUpdated", (game) => {
-      setGame(game);
-      setPlayer(game?.players.find((p) => p._id === player?._id));
-    });
+    (async () => {
+      await gameService.get(id, setGame);
+    })();
   }, []);
 
-  useEffect(() => {
-    if (player) {
-      (async () => {
-        try {
-          const data = await gameService.get(id);
-
-          setGame(data);
-
-          if (!data.players.find((p) => p._id === player._id)) {
-            await gameService.update(
-              data._id,
-              {
-                player,
-              },
-              true
-            );
-          }
-        } catch (error) {
-          navigate("/");
-        }
-      })();
-    }
-  }, [player]);
-
-  useEffect(() => {
-    if (game) {
-      socket.emit("gameJoined", game._id);
-    }
-  }, [game]);
-
-  if (!id) {
-    return <Navigate to="/" />;
-  }
+  // if (!id) {
+  //   return <Navigate to="/" />;
+  // }
 
   if (!player) {
     return <Navigate to={`/player?to=${id}`} />;
@@ -82,6 +60,11 @@ export function Game() {
       <PlayersList />
       {game && (game.isOver ? <StatBox /> : <TypingArea />)}
       {isHost && !game?.hasStarted && <Button onClick={start}>Start</Button>}
+      {!isHost && (
+        <Button onClick={join} variant="soft" disabled={joining || joined}>
+          Join
+        </Button>
+      )}
       <InviteLink gameId={id} />
     </Sheet>
   );

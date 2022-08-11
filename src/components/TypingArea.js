@@ -2,7 +2,7 @@ import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useContext, useEffect, useRef, useState } from "react";
-import { socket } from "../config";
+
 import { gameContext } from "../contexts/gameContext";
 import { playerContext } from "../contexts/playerContext";
 import { useCountdown } from "../hooks/useCountdown";
@@ -28,11 +28,11 @@ export default function TypingArea() {
       isCorrect &&
       (lastValue === " " || player.wordIndex === game.words.length - 1)
     ) {
-      socket.emit("playerTyped", {
-        gameId: game?._id,
-        playerId: player?._id,
-        word: value.trim(),
-      });
+      // socket.emit("playerTyped", {
+      //   gameId: game?._id,
+      //   playerId: player?._id,
+      //   word: value.trim(),
+      // });
       setText("");
     } else {
       setText(value);

@@ -21,8 +21,8 @@ export function PlayersList() {
         {title}
       </Typography>
       <ListDivider />
-      {game?.players.map((player, i) => (
-        <Player key={player._id} player={player} number={i} />
+      {game?.players?.map((player, i) => (
+        <Player key={player.id} player={player} number={i} />
       ))}
     </Sheet>
   );
