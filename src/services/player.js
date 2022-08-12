@@ -1,4 +1,4 @@
-import { doc, getDoc, collection, addDoc } from "firebase/firestore";
+import { doc, getDoc, addDoc, collection, setDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
 
 const create = async (name) => {
@@ -34,6 +34,10 @@ const get = async (id) => {
   }
 };
 
-const playerService = { create, get };
+const update = async (id, player) => {
+  await setDoc(doc(db, "players", id), player);
+};
+
+const playerService = { create, get, update };
 
 export default playerService;

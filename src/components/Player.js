@@ -32,7 +32,7 @@ export function Player({ player, number }) {
           justifyContent: "flex-end",
         }}
       >
-        <Typography>nth Place!</Typography>
+        <Typography fontSize="sm">nth Place!</Typography>
         <Typography fontWeight="lg">{player.speed} WPM</Typography>
       </Sheet>
     </Sheet>

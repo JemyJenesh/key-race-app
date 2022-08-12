@@ -6,16 +6,17 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { gameContext } from "../contexts/gameContext";
 import { playerContext } from "../contexts/playerContext";
 import { useCountdown } from "../hooks/useCountdown";
+import { gameService, playerService } from "../services";
 import DisplayWords from "./DisplayWords";
 
 export default function TypingArea() {
   const inputRef = useRef();
-  const { player } = useContext(playerContext);
+  const { player, setPlayer } = useContext(playerContext);
   const { game } = useContext(gameContext);
   const [counter, start] = useCountdown(5, 1000);
   const [text, setText] = useState("");
 
-  const handleTextChange = (e) => {
+  const handleTextChange = async (e) => {
     let value = e.target.value;
 
     if (value.length > 27) return;
@@ -28,22 +29,30 @@ export default function TypingArea() {
       isCorrect &&
       (lastValue === " " || player.wordIndex === game.words.length - 1)
     ) {
-      // socket.emit("playerTyped", {
-      //   gameId: game?._id,
-      //   playerId: player?._id,
-      //   word: value.trim(),
-      // });
       setText("");
+      let updatedPlayer = game.players.find((p) => p.id === player.id);
+      updatedPlayer.wordIndex += 1;
+
+      const players = game.players.map((p) =>
+        p.id === player.id ? updatedPlayer : p
+      );
+
+      setPlayer(updatedPlayer);
+
+      await gameService.update(game?.id, {
+        ...game,
+        players,
+      });
     } else {
       setText(value);
     }
   };
 
   useEffect(() => {
-    if (game?.hasStarted) {
+    if (game?.startedAt) {
       start();
     }
-  }, [game?.hasStarted]);
+  }, [game?.startedAt]);
 
   useEffect(() => {
     if (counter === 0) {

@@ -45,13 +45,9 @@ export function Player() {
       } else {
         console.log("join game");
 
-        // const updatedGame = await gameService.update(
-        //   queryParam,
-        //   { player },
-        //   true
-        // );
-        // setGame(updatedGame);
-        // navigate(`/game/${queryParam}`);
+        await gameService.update(queryParam, { player });
+
+        navigate(`/game/${queryParam}`);
       }
     } catch (error) {
       console.log(error);

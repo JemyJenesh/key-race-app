@@ -2,7 +2,7 @@ import Sheet from "@mui/joy/Sheet";
 
 const Track = ({ children }) => {
   return (
-    <Sheet sx={{ display: "flex", gap: "4px" }}>
+    <Sheet sx={{ display: "flex", gap: "4px", width: "100%" }}>
       <Sheet
         sx={{
           flex: 1,

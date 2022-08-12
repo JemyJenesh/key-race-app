@@ -38,7 +38,10 @@ export function Home() {
   return (
     <Sheet
       sx={{
-        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
         p: 5,
       }}
     >
@@ -50,6 +53,18 @@ export function Home() {
       </Typography>
       <Typography level="p" component="p" color="primary" marginBottom={5}>
         A clone of TypeRacer, by Jenesh.
+      </Typography>
+
+      <img src="/images/banner.png" style={{ display: "block" }} />
+      <Typography marginBottom={3}>
+        Image by{" "}
+        <a href="https://pixabay.com/users/pixloger-783453/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1648337">
+          PixLoger
+        </a>{" "}
+        from{" "}
+        <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1648337">
+          Pixabay
+        </a>
       </Typography>
 
       <Button onClick={handleClick} size="lg" variant="soft" disabled={loading}>
