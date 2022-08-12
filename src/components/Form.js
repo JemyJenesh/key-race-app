@@ -1,9 +1,7 @@
 import { Box, Input, Sheet, Typography } from "@mui/joy";
 import { useState } from "react";
-
 import Button from "../components/Button";
-import useCreateGame from "../hooks/useCreateGame";
-import useCreatePlayer from "../hooks/useCreatePlayer";
+import { useCreateGame, useCreatePlayer } from "../hooks";
 import { useForm } from "../utils/store";
 
 const Form = () => {

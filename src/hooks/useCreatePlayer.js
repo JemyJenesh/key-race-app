@@ -1,10 +1,9 @@
 import { useState } from "react";
-
 import playerService from "../services/player";
 import playerUtil from "../utils/player";
 import { useStore } from "../utils/store";
 
-const useCreatePlayer = () => {
+export const useCreatePlayer = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -31,5 +30,3 @@ const useCreatePlayer = () => {
 
   return { loading, error, createPlayer };
 };
-
-export default useCreatePlayer;

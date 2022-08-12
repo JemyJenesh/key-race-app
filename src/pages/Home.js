@@ -1,7 +1,6 @@
-import Sheet from "@mui/joy/Sheet";
-import Typography from "@mui/joy/Typography";
+import { Sheet, Typography } from "@mui/joy";
 import Button from "../components/Button";
-import useCreateGame from "../hooks/useCreateGame";
+import { useCreateGame } from "../hooks";
 import { useForm, usePlayer } from "../utils/store";
 
 export function Home() {

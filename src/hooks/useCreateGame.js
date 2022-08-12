@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import gameService from "../services/game";
 import { useStore } from "../utils/store";
 
-const useCreateGame = () => {
+export const useCreateGame = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -29,5 +28,3 @@ const useCreateGame = () => {
 
   return { loading, error, createGame };
 };
-
-export default useCreateGame;
