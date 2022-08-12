@@ -1,12 +1,11 @@
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useContext } from "react";
-import { gameContext } from "../contexts/gameContext";
+import { useGame } from "../utils/store";
 import Car from "./Car";
 import Track from "./Track";
 
 export function Player({ player, number }) {
-  const { game } = useContext(gameContext);
+  const game = useGame();
 
   return (
     <Sheet

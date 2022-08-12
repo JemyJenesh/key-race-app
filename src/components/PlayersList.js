@@ -1,13 +1,11 @@
 import ListDivider from "@mui/joy/ListDivider";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useContext } from "react";
-import { gameContext } from "../contexts/gameContext";
-
+import { useGame } from "../utils/store";
 import { Player } from "./Player";
 
 export function PlayersList() {
-  const { game } = useContext(gameContext);
+  const game = useGame();
 
   const title = !game?.hasStarted
     ? "Waiting for players..."

@@ -7,6 +7,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import playerService from "./player";
+import { useStore } from "../utils/store";
 
 const create = async (player) => {
   const quotable = await fetch("https://api.quotable.io/random?minLength=200");
@@ -34,7 +35,7 @@ const create = async (player) => {
   return game;
 };
 
-const get = async (id, setGame) => {
+const get = async (id) => {
   try {
     onSnapshot(
       doc(db, "games", id),
@@ -44,7 +45,7 @@ const get = async (id, setGame) => {
 
         console.log("Game data: ", game);
 
-        if (!doc.metadata.hasPendingWrites) setGame(game);
+        if (!doc.metadata.hasPendingWrites) useStore.setState({ game });
       }
     );
   } catch (err) {

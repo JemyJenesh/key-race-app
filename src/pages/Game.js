@@ -1,19 +1,18 @@
 import { Button } from "@mui/joy";
 import Sheet from "@mui/joy/Sheet";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import { InviteLink, PlayersList } from "../components";
 import StatBox from "../components/StatBox";
 import TypingArea from "../components/TypingArea";
-import { gameContext } from "../contexts/gameContext";
-import { playerContext } from "../contexts/playerContext";
 import { gameService, playerService } from "../services";
+import { useGame, usePlayer, useStore } from "../utils/store";
 
 export function Game() {
   const { id } = useParams();
-  const { player, setPlayer } = useContext(playerContext);
-  const { game, setGame } = useContext(gameContext);
+  const player = usePlayer();
+  const setPlayer = useStore((state) => state.setPlayer);
+  const game = useGame();
   const [joining, setJoining] = useState(false);
   const isHost = player?.id === game?.hostId;
   const joined = !!game?.players.find((p) => p.id === player?.id);
@@ -44,9 +43,9 @@ export function Game() {
 
   useEffect(() => {
     (async () => {
-      await gameService.get(id, setGame);
+      await gameService.get(id);
     })();
-  }, []);
+  }, [id]);
 
   // if (!id) {
   //   return <Navigate to="/" />;

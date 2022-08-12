@@ -1,12 +1,11 @@
 import Typography from "@mui/joy/Typography";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { theme } from "../config";
-import { gameContext } from "../contexts/gameContext";
-import { playerContext } from "../contexts/playerContext";
+import { useGame, usePlayer } from "../utils/store";
 
 const DisplayWords = ({ typedWord }) => {
-  const { player } = useContext(playerContext);
-  const { game } = useContext(gameContext);
+  const player = usePlayer();
+  const game = useGame();
   const [errorIndex, setErrorIndex] = useState(null);
 
   const words = game.words;

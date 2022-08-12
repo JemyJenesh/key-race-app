@@ -1,18 +1,17 @@
 import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useContext, useEffect, useRef, useState } from "react";
-
-import { gameContext } from "../contexts/gameContext";
-import { playerContext } from "../contexts/playerContext";
+import { useEffect, useRef, useState } from "react";
 import { useCountdown } from "../hooks/useCountdown";
-import { gameService, playerService } from "../services";
+import { gameService } from "../services";
+import { useGame, usePlayer, useStore } from "../utils/store";
 import DisplayWords from "./DisplayWords";
 
 export default function TypingArea() {
   const inputRef = useRef();
-  const { player, setPlayer } = useContext(playerContext);
-  const { game } = useContext(gameContext);
+  const player = usePlayer();
+  const setPlayer = useStore((state) => state.setPlayer);
+  const game = useGame();
   const [counter, start] = useCountdown(5, 1000);
   const [text, setText] = useState("");
 
