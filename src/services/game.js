@@ -1,13 +1,13 @@
 import {
-  doc,
-  onSnapshot,
   addDoc,
   collection,
+  doc,
+  onSnapshot,
   setDoc,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
-import playerService from "./player";
 import { useStore } from "../utils/store";
+import playerService from "./player";
 
 const create = async (player) => {
   const quotable = await fetch("https://api.quotable.io/random?minLength=200");

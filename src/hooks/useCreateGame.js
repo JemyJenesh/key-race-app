@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import gameService from "../services/game";
+import { gameService } from "../services";
 import { useStore } from "../utils/store";
 
 export const useCreateGame = () => {

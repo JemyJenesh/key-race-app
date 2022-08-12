@@ -5,7 +5,7 @@ import "./app.css";
 import Form from "./components/Form";
 import Spinner from "./components/Spinner";
 import { Game, Home } from "./pages";
-import playerService from "./services/player";
+import { playerService } from "./services";
 import playerUtil from "./utils/player";
 import { useStore } from "./utils/store";
 
