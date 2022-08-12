@@ -61,6 +61,8 @@ export default function TypingArea() {
     }
   }, [counter]);
 
+  if (!game) return null;
+
   return (
     <Sheet
       variant="outlined"

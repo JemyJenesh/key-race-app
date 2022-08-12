@@ -9,7 +9,7 @@ const DisplayWords = ({ typedWord }) => {
   const [errorIndex, setErrorIndex] = useState(null);
 
   const words = game.words;
-  const currentWord = words[player.wordIndex];
+  const currentWord = words[player?.wordIndex ?? 0];
 
   useEffect(() => {
     currentWord?.split("").some((c, i) => {
@@ -23,7 +23,7 @@ const DisplayWords = ({ typedWord }) => {
   }, [typedWord]);
 
   const getTypedWords = () => {
-    let typedWords = words.slice(0, player.wordIndex);
+    let typedWords = words.slice(0, player?.wordIndex ?? 0);
     typedWords = typedWords.join(" ");
 
     return <Typography textColor="lightgray">{typedWords} </Typography>;
@@ -45,7 +45,7 @@ const DisplayWords = ({ typedWord }) => {
   };
 
   const getRestWords = () => {
-    let restWords = words.slice(player.wordIndex + 1);
+    let restWords = words.slice((player?.wordIndex ?? 0) + 1);
     restWords = restWords.join(" ");
 
     return <Typography> {restWords}</Typography>;

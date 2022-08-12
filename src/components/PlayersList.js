@@ -13,6 +13,8 @@ export function PlayersList() {
     ? "The race is over."
     : "Players are racing...";
 
+  if (!game) return null;
+
   return (
     <Sheet>
       <Typography id="players-list" mb={1} fontSize="lg">

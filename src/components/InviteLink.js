@@ -2,9 +2,13 @@ import Button from "@mui/joy/Button";
 import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
+import { useGame } from "../utils/store";
 
 export function InviteLink({ gameId }) {
+  const game = useGame();
   const link = `http://localhost:3000/game/${gameId}`;
+
+  if (!game) return null;
 
   return (
     <Sheet>

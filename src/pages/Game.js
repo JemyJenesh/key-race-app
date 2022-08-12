@@ -1,59 +1,25 @@
-import { Button } from "@mui/joy";
 import Sheet from "@mui/joy/Sheet";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { InviteLink, PlayersList } from "../components";
-import StatBox from "../components/StatBox";
+import GameControls from "../components/GameControls";
 import TypingArea from "../components/TypingArea";
-import { gameService, playerService } from "../services";
-import { useGame, usePlayer, useStore } from "../utils/store";
+import { gameService } from "../services";
 
 export function Game() {
+  const navigate = useNavigate();
   const { id } = useParams();
-  const player = usePlayer();
-  const setPlayer = useStore((state) => state.setPlayer);
-  const game = useGame();
-  const [joining, setJoining] = useState(false);
-  const isHost = player?.id === game?.hostId;
-  const joined = !!game?.players.find((p) => p.id === player?.id);
-
-  const start = async () => {
-    await gameService.update(game?.id, {
-      ...game,
-      startedAt: new Date().getTime(),
-    });
-  };
-
-  const join = async () => {
-    setJoining(true);
-    const updatedPlayer = {
-      ...player,
-      wordIndex: 0,
-    };
-    setPlayer(updatedPlayer);
-
-    await playerService.update(player.id, updatedPlayer);
-    await gameService.update(game?.id, {
-      ...game,
-      players: [...game.players, updatedPlayer],
-    });
-
-    setJoining(false);
-  };
 
   useEffect(() => {
     (async () => {
-      await gameService.get(id);
+      try {
+        await gameService.get(id);
+      } catch (error) {
+        console.log(error);
+        navigate("/");
+      }
     })();
   }, [id]);
-
-  // if (!id) {
-  //   return <Navigate to="/" />;
-  // }
-
-  // if (!player) {
-  //   return <Navigate to={`/player?to=${id}`} />;
-  // }
 
   return (
     <Sheet
@@ -68,13 +34,8 @@ export function Game() {
       }}
     >
       <PlayersList />
-      {game && (game.isOver ? <StatBox /> : <TypingArea />)}
-      {isHost && !game?.hasStarted && <Button onClick={start}>Start</Button>}
-      {!isHost && (
-        <Button onClick={join} variant="soft" disabled={joining || joined}>
-          Join
-        </Button>
-      )}
+      <TypingArea />
+      <GameControls />
       <InviteLink gameId={id} />
     </Sheet>
   );

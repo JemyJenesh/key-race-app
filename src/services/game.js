@@ -36,21 +36,15 @@ const create = async (player) => {
 };
 
 const get = async (id) => {
-  try {
-    onSnapshot(
-      doc(db, "games", id),
-      { includeMetadataChanges: true },
-      (doc) => {
-        const game = { id, ...doc.data() };
+  onSnapshot(doc(db, "games", id), { includeMetadataChanges: true }, (doc) => {
+    if (doc.exists()) {
+      const game = { id, ...doc.data() };
 
-        console.log("Game data: ", game);
+      console.log("Game data: ", game);
 
-        if (!doc.metadata.hasPendingWrites) useStore.setState({ game });
-      }
-    );
-  } catch (err) {
-    console.log("get real time,", err);
-  }
+      if (!doc.metadata.hasPendingWrites) useStore.setState({ game });
+    }
+  });
 };
 
 const update = async (id, game) => {

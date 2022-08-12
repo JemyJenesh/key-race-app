@@ -1,15 +1,18 @@
 import { Box, Input, Sheet, Typography } from "@mui/joy";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Button from "../components/Button";
-import { useCreateGame, useCreatePlayer } from "../hooks";
+import { useCreateGame, useCreatePlayer, useJoinPlayer } from "../hooks";
 import { useForm } from "../utils/store";
 
 const Form = () => {
+  let location = useLocation();
   const [name, setName] = useState("");
   const { open, hideForm } = useForm();
 
   const { loading: creating, createGame } = useCreateGame();
   const { loading, createPlayer } = useCreatePlayer();
+  const { joining, join } = useJoinPlayer();
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -18,7 +21,12 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const player = await createPlayer(name);
-    await createGame(player);
+
+    if (location.pathname === "/") {
+      await createGame(player);
+    } else {
+      await join(player);
+    }
     setName("");
     hideForm();
   };
@@ -72,7 +80,11 @@ const Form = () => {
             <Button variant="soft" fullWidth type="submit" onClick={hideForm}>
               Cancel
             </Button>
-            <Button fullWidth type="submit" loading={loading || creating}>
+            <Button
+              fullWidth
+              type="submit"
+              loading={loading || creating || joining}
+            >
               Create
             </Button>
           </Box>
