@@ -1,38 +1,24 @@
-import Button from "@mui/joy/Button";
+import Button from "../components/Button";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { gameContext } from "../contexts/gameContext";
+import { useContext } from "react";
 import { playerContext } from "../contexts/playerContext";
-import { gameService } from "../services";
+import { useForm } from "../utils/store";
+import useCreateGame from "../hooks/useCreateGame";
 
 export function Home() {
-  const [loading, setLoading] = useState(false);
-  const { setGame } = useContext(gameContext);
+  const { showForm } = useForm();
+
   const { player } = useContext(playerContext);
-  const navigate = useNavigate();
+
+  const { loading, createGame } = useCreateGame();
 
   const handleClick = async () => {
-    if (player) {
-      setLoading(true);
-      await handleCreateGame();
-      setLoading(false);
+    if (!player) {
+      showForm();
     } else {
-      handleCreatePlayer();
+      await createGame(player);
     }
-  };
-
-  const handleCreateGame = async () => {
-    const game = await gameService.create(player);
-
-    setGame(game);
-
-    navigate(`/game/${game.id}`);
-  };
-
-  const handleCreatePlayer = () => {
-    navigate(`/player?to=create`);
   };
 
   return (
@@ -67,7 +53,7 @@ export function Home() {
         </a>
       </Typography>
 
-      <Button onClick={handleClick} size="lg" variant="soft" disabled={loading}>
+      <Button onClick={handleClick} size="lg" variant="soft" loading={loading}>
         Start a race!
       </Button>
     </Sheet>

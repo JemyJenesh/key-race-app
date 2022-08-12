@@ -7,6 +7,7 @@ import "./app.css";
 import { playerContext } from "./contexts/playerContext";
 import playerService from "./services/player";
 import playerUtil from "./utils/player";
+import Form from "./components/Form";
 
 function App() {
   const { setPlayer } = useContext(playerContext);
@@ -38,11 +39,14 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/game/:id" element={<Game />} />
-      <Route path="/player" element={<Player />} />
-    </Routes>
+    <>
+      <Form />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/game/:id" element={<Game />} />
+        <Route path="/player" element={<Player />} />
+      </Routes>
+    </>
   );
 }
 
