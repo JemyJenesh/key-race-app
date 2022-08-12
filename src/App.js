@@ -1,16 +1,16 @@
+import { Box } from "@mui/joy";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-
-import { Game, Home, Player } from "./pages";
-
-import { useContext, useEffect, useState } from "react";
 import "./app.css";
-import { playerContext } from "./contexts/playerContext";
+import Form from "./components/Form";
+import Spinner from "./components/Spinner";
+import { Game, Home } from "./pages";
 import playerService from "./services/player";
 import playerUtil from "./utils/player";
-import Form from "./components/Form";
+import { useStore } from "./utils/store";
 
 function App() {
-  const { setPlayer } = useContext(playerContext);
+  const setPlayer = useStore((state) => state.setPlayer);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,7 +35,11 @@ function App() {
   }, []);
 
   if (loading) {
-    return "loading...";
+    return (
+      <Box display="flex" justifyContent="center" mt={10}>
+        <Spinner />
+      </Box>
+    );
   }
 
   return (
@@ -44,7 +48,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/game/:id" element={<Game />} />
-        <Route path="/player" element={<Player />} />
       </Routes>
     </>
   );

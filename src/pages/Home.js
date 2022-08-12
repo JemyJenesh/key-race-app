@@ -1,15 +1,13 @@
-import Button from "../components/Button";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useContext } from "react";
-import { playerContext } from "../contexts/playerContext";
-import { useForm } from "../utils/store";
+import Button from "../components/Button";
 import useCreateGame from "../hooks/useCreateGame";
+import { useForm, usePlayer } from "../utils/store";
 
 export function Home() {
   const { showForm } = useForm();
 
-  const { player } = useContext(playerContext);
+  const player = usePlayer();
 
   const { loading, createGame } = useCreateGame();
 

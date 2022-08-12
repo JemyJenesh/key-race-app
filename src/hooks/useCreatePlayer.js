@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import playerService from "../services/player";
+import playerUtil from "../utils/player";
 import { useStore } from "../utils/store";
 
 const useCreatePlayer = () => {
@@ -15,6 +16,8 @@ const useCreatePlayer = () => {
 
       player = await playerService.create(name);
       console.log("Player from useCreatePlayer", player);
+
+      playerUtil.savePlayerId(player.id);
 
       useStore.setState({ player });
     } catch (error) {
