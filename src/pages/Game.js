@@ -2,6 +2,7 @@ import Sheet from "@mui/joy/Sheet";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { InviteLink, PlayersList } from "../components";
+import Footer from "../components/Footer";
 import GameControls from "../components/GameControls";
 import TypingArea from "../components/TypingArea";
 import { gameService } from "../services";
@@ -37,6 +38,7 @@ export function Game() {
       <TypingArea />
       <GameControls />
       <InviteLink gameId={id} />
+      <Footer />
     </Sheet>
   );
 }
