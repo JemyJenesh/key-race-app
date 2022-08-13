@@ -1,5 +1,6 @@
 import { Sheet, Typography } from "@mui/joy";
 import Button from "../components/Button";
+import Footer from "../components/Footer";
 import { useCreateGame } from "../hooks";
 import { useForm, usePlayer } from "../utils/store";
 
@@ -57,6 +58,8 @@ export function Home() {
       <Button onClick={handleClick} size="lg" variant="soft" loading={loading}>
         Start a race!
       </Button>
+
+      <Footer />
     </Sheet>
   );
 }
