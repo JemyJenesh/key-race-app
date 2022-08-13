@@ -6,7 +6,7 @@ import { useGame } from "../utils/store";
 
 export function InviteLink({ gameId }) {
   const game = useGame();
-  const link = `http://localhost:3000/game/${gameId}`;
+  const link = `${process.env.REACT_APP_URL}/game/${gameId}`;
 
   if (!game) return null;
 
