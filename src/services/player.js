@@ -7,6 +7,7 @@ const create = async (name) => {
     wpm: 0,
     wordIndex: 0,
     errorCount: 0,
+    position: 0,
   };
   const docRef = await addDoc(collection(db, "players"), player);
 

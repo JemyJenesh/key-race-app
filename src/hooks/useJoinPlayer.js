@@ -12,40 +12,38 @@ export const useJoinPlayer = () => {
       ...player,
       wordIndex: 0,
       wpm: 0,
+      position: 0,
     };
 
-    try {
-      setJoining(true);
+    if (game.isOver) {
+      setError("The game is over!");
+    } else if (game.startedAt) {
+      setError("The game has already began!");
+    } else if (game.players.length >= 5) {
+      setError("The game is full!");
+    } else {
+      try {
+        setJoining(true);
 
-      await playerService.update(player.id, updatedPlayer);
-      await gameService.update(game.id, {
-        ...game,
-        players: [...game.players, updatedPlayer],
-      });
+        useStore.setState({ player: updatedPlayer });
 
-      console.log("Player from useJoinPlayer");
+        await playerService.update(player.id, updatedPlayer);
+        await gameService.update(game.id, {
+          ...game,
+          players: [...game.players, updatedPlayer],
+        });
 
-      useStore.setState({ player, game });
-    } catch (error) {
-      setError(error);
-    } finally {
-      setJoining(false);
+        console.log("Player from useJoinPlayer");
+      } catch (error) {
+        setError(error);
+      } finally {
+        setJoining(false);
+        setError(null);
+      }
+
+      return player;
     }
-
-    return player;
   };
 
   return { joining, error, join };
 };
-
-//       const updatedPlayer = {
-//         ...player,
-//         wordIndex: 0,
-//       };
-//       setPlayer(updatedPlayer);
-
-//       await playerService.update(player.id, updatedPlayer);
-//       await gameService.update(game?.id, {
-//         ...game,
-//         players: [...game.players, updatedPlayer],
-//       });

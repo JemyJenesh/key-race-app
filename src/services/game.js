@@ -16,6 +16,8 @@ const create = async (player) => {
   const updatedPlayer = {
     ...player,
     wordIndex: 0,
+    wpm: 0,
+    position: 0,
   };
 
   const game = {
@@ -24,8 +26,10 @@ const create = async (player) => {
     players: [updatedPlayer],
     hostId: player.id,
     words: quote.content.split(" "),
+    position: 0,
   };
 
+  useStore.setState({ player: updatedPlayer });
   await playerService.update(player.id, updatedPlayer);
 
   const docRef = await addDoc(collection(db, "games"), game);

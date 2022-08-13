@@ -42,7 +42,7 @@ const Form = () => {
         position: "fixed",
         inset: 0,
         width: "100%",
-        zIndex: 1,
+        zIndex: 100,
       }}
     >
       <Sheet

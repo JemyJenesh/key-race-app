@@ -4,6 +4,18 @@ import { useGame } from "../utils/store";
 import Car from "./Car";
 import Track from "./Track";
 
+const positionMap = {
+  1: "1st ",
+  2: "2nd ",
+  3: "3rd ",
+  4: "4th ",
+  5: "5th ",
+  6: "6th ",
+  7: "7th ",
+  8: "8th ",
+  9: "9th ",
+};
+
 export function Player({ player, number }) {
   const game = useGame();
 
@@ -31,8 +43,12 @@ export function Player({ player, number }) {
           justifyContent: "flex-end",
         }}
       >
-        <Typography fontSize="sm">nth Place!</Typography>
-        <Typography fontWeight="lg">{player.speed} WPM</Typography>
+        {player.position > 0 && (
+          <Typography fontSize="sm">
+            {positionMap[player.position]} Place!
+          </Typography>
+        )}
+        <Typography fontWeight="lg">{player.wpm} WPM</Typography>
       </Sheet>
     </Sheet>
   );

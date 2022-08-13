@@ -2,12 +2,13 @@ import { useForm, useGame, usePlayer } from "../utils/store";
 import Button from "../components/Button";
 import { gameService } from "../services";
 import { useJoinPlayer } from "../hooks";
+import { Box } from "@mui/joy";
 
 const GameControls = () => {
   const { showForm } = useForm();
   const game = useGame();
   const player = usePlayer();
-  const { joining, join: joinPlayer } = useJoinPlayer();
+  const { joining, error, join: joinPlayer } = useJoinPlayer();
 
   const isHost = player?.id === game?.hostId;
   const joined = !!game?.players.find((p) => p.id === player?.id);
@@ -30,22 +31,21 @@ const GameControls = () => {
   if (!game) return null;
 
   return (
-    <div>
+    <Box display="flex" justifyContent="space-around">
+      {error}
+      <Button variant="soft" disabled>
+        Leave
+      </Button>
       {isHost ? (
         <Button onClick={start} disabled={!!game.startedAt}>
           Start
         </Button>
       ) : (
-        <Button
-          onClick={join}
-          variant="soft"
-          disabled={joined}
-          loading={joining}
-        >
+        <Button onClick={join} disabled={joined} loading={joining}>
           Join
         </Button>
       )}
-    </div>
+    </Box>
   );
 };
 

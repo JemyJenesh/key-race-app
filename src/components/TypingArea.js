@@ -3,7 +3,8 @@ import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useEffect, useRef, useState } from "react";
 import { useCountdown } from "../hooks/useCountdown";
-import { gameService } from "../services";
+import { gameService, playerService } from "../services";
+import playerUtil from "../utils/player";
 import { useGame, usePlayer, useStore } from "../utils/store";
 import DisplayWords from "./DisplayWords";
 
@@ -23,14 +24,23 @@ export default function TypingArea() {
     let lastValue = value.charAt(value.length - 1);
 
     const isCorrect = value.trim() === game.words[player.wordIndex];
+    const isLastWord = player.wordIndex === game.words.length - 1;
 
-    if (
-      isCorrect &&
-      (lastValue === " " || player.wordIndex === game.words.length - 1)
-    ) {
+    if (isCorrect && (lastValue === " " || isLastWord)) {
       setText("");
+      const speed = playerUtil.calculateWPM(
+        game.startedAt,
+        new Date().getTime(),
+        game.words,
+        player.wordIndex
+      );
       let updatedPlayer = game.players.find((p) => p.id === player.id);
       updatedPlayer.wordIndex += 1;
+      updatedPlayer.wpm = speed;
+
+      if (isLastWord) {
+        updatedPlayer.position = game.position + 1;
+      }
 
       const players = game.players.map((p) =>
         p.id === player.id ? updatedPlayer : p
@@ -40,8 +50,10 @@ export default function TypingArea() {
 
       await gameService.update(game?.id, {
         ...game,
+        position: game.position + isLastWord ? 1 : 0,
         players,
       });
+      await playerService.update(player.id, updatedPlayer);
     } else {
       setText(value);
     }
