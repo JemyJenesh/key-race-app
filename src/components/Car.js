@@ -2,7 +2,7 @@ import Avatar from "@mui/joy/Avatar";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 
-const Car = ({ progress = 0, name, number = 0 }) => {
+const Car = ({ progress = 0, name, number = 0, isSpecial = false }) => {
   return (
     <Sheet
       sx={{
@@ -16,7 +16,29 @@ const Car = ({ progress = 0, name, number = 0 }) => {
         zIndex: 10,
       }}
     >
-      <Typography>{name}</Typography>
+      {isSpecial ? (
+        <Typography
+          bgcolor="gold"
+          sx={{
+            transform: "skew(10deg)",
+          }}
+        >
+          <Typography
+            sx={{
+              display: "block",
+              textDecoration: "none",
+              padding: "2px 6px",
+              transform: "skew(-10deg)",
+              color: "inherit",
+            }}
+          >
+            {name}
+          </Typography>
+        </Typography>
+      ) : (
+        <Typography>{name}</Typography>
+      )}
+
       <Avatar
         variant="plain"
         src={`/images/${number}.jpg`}

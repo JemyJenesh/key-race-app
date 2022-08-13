@@ -31,6 +31,7 @@ export function Player({ player, number }) {
           number={number}
           name={player.name}
           progress={Math.floor((player?.wordIndex / game?.words.length) * 100)}
+          isSpecial={player.isJenesh}
         />
       </Track>
       <Sheet
