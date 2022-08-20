@@ -43,10 +43,17 @@ const get = async (id) => {
   onSnapshot(doc(db, "games", id), { includeMetadataChanges: true }, (doc) => {
     if (doc.exists()) {
       const game = { id, ...doc.data() };
+      const player = useStore.getState().player;
+
+      const newGameData = {
+        ...game,
+        players: game.players.filter((p) => p.id === player.id),
+      };
 
       console.log("Game data: ", game);
 
-      if (!doc.metadata.hasPendingWrites) useStore.setState({ game });
+      if (!doc.metadata.hasPendingWrites)
+        useStore.setState({ game: newGameData });
     }
   });
 };
